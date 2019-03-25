@@ -1,31 +1,39 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <span class="text">ABCDEFG</span>
+    <span class="icon-add"></span>
     <router-view/>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+<script>
+/* eslint-disable */
+  import { mapGetters } from 'vuex'
+  export default {
+    computed: {
+      ...mapGetters(['test'])     // vuex语法 mapGetters是一个方法,参数当作keys数组？
+    },
+    mounted () {
+      this.$store.dispatch('setTest', 9).then(() => {
+        console.log(this.test)  // this.$store.state.book.test
+      })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', () => {  // DOM加载完毕后回调
+    const html = document.querySelector('html')          // 取到html根元素
+    let fontSize = window.innerWidth / 10                // 800 -> 80 -> 1rem = 80px 
+    fontSize = fontSize > 50 ? 50 : fontSize             // 设置一个最大上限  
+    html.style.fontSize = fontSize + 'px'                // 设置根元素默认字体大小
+  })
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+</script>
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+<style lang="scss" scoped> /* scoped只在当前文件内有效 */
+  @import "./assets/styles/global";
+  .text {
+    font-family: 'Days One';
+    color: orange;
+    font-size: px2rem(20);
+  }
+
 </style>
