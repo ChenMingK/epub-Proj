@@ -1,0 +1,28 @@
+$ratio: 375 / 10;
+@function px2rem($px) {
+  @return ($px / $ratio) + rem;   // rem ? 'rem'? equal?
+}
+
+@mixin center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@mixin right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@mixin ellipsis {
+  text-overflow: ellipsis; // 如果超出使用省略号
+  overflow: hidden;        // 超出部分隐藏
+  white-space: nowrap;     // 不换行
+}
