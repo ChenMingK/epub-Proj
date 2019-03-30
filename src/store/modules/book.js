@@ -1,4 +1,3 @@
-/* eslint-disable */
 const book = {
   state: {
     fileName: '',
@@ -6,11 +5,11 @@ const book = {
     settingVisible: -1,
     defaultFontSize: 16,
     defaultFontFamily: 'Default',
-    fontFamilyVisible: false,       // for EbookSettingFontPopup component
+    fontFamilyVisible: false, // for EbookSettingFontPopup component
     defaultTheme: 'default',
     bookAvailable: false,
     progress: 0,
-    section: 0,                     // 当前章节位置 Number
+    section: 0, // 当前章节位置 Number
     isPaginating: true,
     currentBook: null,
     navigation: null,
@@ -80,7 +79,7 @@ const book = {
     'SET_IS_BOOKMARK': (state, isBookmark) => {
       state.isBookmark = isBookmark
     }
-  },
+  }
 }
 
 export default book

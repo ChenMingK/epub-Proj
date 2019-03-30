@@ -22,7 +22,6 @@
 </template>
 
 <script>
-/* eslint-disable */
 import { mapGetters} from 'vuex'  // 映射 + 混入 computed
 import { ebookMixin } from '../../utils/mixin'
 export default {

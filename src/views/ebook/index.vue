@@ -7,7 +7,6 @@
 </template>
 
 <script>
-/* eslint-disable */  // 引入时及引用时的命名规则？ 注意使用vuex都要混入
 import EbookReader from '../../components/ebook/EbookReader.vue'  
 import EbookTitle from '../../components/ebook/EbookTitle.vue'
 import EbookMenu from '../../components/ebook/EbookMenu'

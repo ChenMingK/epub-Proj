@@ -5,7 +5,6 @@
 </template>
 
 <script>
-/* eslint-disable */
 import Epub from 'epubjs'
 // import { mapActions } from 'vuex' // this.#store.dispatch('name', params) => this.name(params) 要在methods里解构
 import { ebookMixin } from '../../utils/mixin'
@@ -42,11 +41,6 @@ export default {
                 this.setSettingVisible(-1)
             }
             this.setMenuVisible(!this.menuVisible)
-            this.setFontFamilyVisible(false)
-        },
-        hideTitleAndMenu () {
-            this.setMenuVisible(false)
-            this.setSettingVisible(-1)
             this.setFontFamilyVisible(false)
         },
         initTheme() { // 注册主题
@@ -128,12 +122,26 @@ export default {
                 event.stopPropagation()
             })
         },
+        // 解析电子书并保存必要的变量
+        parseBook() {
+            // 获取blob链接，该链接可直接获取图片
+            this.book.loaded.cover.then(cover => {
+                this.book.archive.createUrl(cover).then(url => {
+                    this.setCover(url)
+                })
+            })
+            // 获取作者信息
+            this.book.loaded.metadata.then(metadata => {
+                this.setMetadata(metadata)
+            })
+        },
         initEpub () {
             const url = `${process.env.VUE_APP_RES_URL}` + '/epub/' + this.fileName + '.epub'  // 注意通过vuex的mapGetters才能通过this.fileName调用
             this.book = new Epub(url)                           // 通过url就可以获取book对象!
             this.setCurrentBook(this.book)
             this.initRendition()
             this.initGesture()
+            this.parseBook()
             // 分页 ready会在book解析完成后调用 不精确的分页算法，精确的分页还要考虑图片和文字大小的不同
             this.book.ready.then(() => {
                 return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName) / 16))

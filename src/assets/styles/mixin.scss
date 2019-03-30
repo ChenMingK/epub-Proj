@@ -20,9 +20,19 @@ $ratio: 375 / 10;
   justify-content: flex-end;
   align-items: center;
 }
-
+// 使用文字省略时都必须指定外层宽度
 @mixin ellipsis {
   text-overflow: ellipsis; // 如果超出使用省略号
   overflow: hidden;        // 超出部分隐藏
   white-space: nowrap;     // 不换行
+}
+
+@mixin ellipsis2($line) {
+  display: -webkit-box;
+  -webkit-box--orient: vertical; // direction
+  -webkit-line-clamp: $line;         // line numbers
+  white-space: normal;
+  overflow: hidden;           
+  text-overflow: ellipsis;   
+  word-break: break-all; // 任何情况下都会换行
 }

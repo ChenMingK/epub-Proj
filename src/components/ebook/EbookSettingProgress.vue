@@ -33,14 +33,13 @@
 
 <script>
 import { ebookMixin } from '../../utils/mixin'
-import { getReadTime } from '../../utils/localStorage';
 export default {
     mixins: [ebookMixin],
     computed: {
       getSectionName() {
         if (this.section) {
           const sectionInfo = this.currentBook.section(this.section)
-          if (sectionInfo && sectionInfo.href) {
+          if (sectionInfo && sectionInfo.href && this.currentBook && this.currentBook.navigation) { // 注意异步条件
             return this.currentBook.navigation.get(sectionInfo.href).label // 获取对应章节的目录的label
           }
         }
@@ -93,17 +92,6 @@ export default {
           const sectionInfo = this.currentBook.section(this.section) // sectionAPI 返回一个对象
           if (sectionInfo && sectionInfo.href) {
             this.display(sectionInfo.href)
-          }
-        },
-        getReadTimeText() {
-          return this.$t('book.haveRead').replace('$1', this.getReadTimeByMinute())
-        },
-        getReadTimeByMinute() {
-          const readTime = getReadTime(this.fileName)
-          if (!readTime) {
-            return 0
-          } else {
-            return Math.ceil(readTime / 60) // 向上取整
           }
         }
     },
