@@ -6,6 +6,7 @@
 <script>
   import { px2rem } from '../../utils/utils'
   export default {
+    // 传递宽、高、颜色
     props: {
       width: Number,
       height: Number,
@@ -23,6 +24,7 @@
       }
     },
     methods: {
+      // 书签要有吸顶效果
       refresh() {
         if (this.height && this.width) {
           this.$refs.bookmark.style.borderWidth = `${px2rem(this.height - 5)}rem

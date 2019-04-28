@@ -8,7 +8,7 @@
            @mousedown.left="onMouseEnter"
            @mousemove.left="onMouseMove"    
            @mouseup.left="onMouseEnd"></div>
-           <!--通过蒙版实现下拉手势 @touch由epub提供 @mouse适配PC端 -> vue2.0? left->左键-->
+           <!--touchmove:移动端事件，手指在屏幕上滑动时触发; touchend: 手指从屏幕上离开时触发-->
   </div>
 </template>
 
@@ -76,14 +76,14 @@ export default {
         let offsetY = 0
         if (this.firstOffsetY) {
           offsetY = e.changedTouches[0].clientY - this.firstOffsetY // this - vue
-          this.setOffsetY(offsetY)
+          this.setOffsetY(offsetY) // offsetY存入vuex以便书签监听
         } else {
-          this.firstOffsetY = e.changedTouches[0].clientY
+          this.firstOffsetY = e.changedTouches[0].clientY // firstOffsetY记录本次手势操作开始时Y轴偏移
         }
         e.preventDefault()  // 防止下拉时显示些多余的东西
         e.stopPropagation() // 禁止传播？
       },
-      // 手指离开屏幕需要还原
+      // 手指离开屏幕需要还原firstOffsetY
       moveEnd(e) {
         this.setOffsetY(0)
         this.firstOffsetY = 0
