@@ -26,7 +26,7 @@ export default {
           this.currentBook.rendition.themes.select(this.defaultTheme)
           this.initGlobalStyle()
         })
-        saveTheme(this.fileName, theme.name)
+        saveTheme(this.fileName, theme.name) // 缓存主题
       }
     }
     

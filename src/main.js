@@ -1,4 +1,4 @@
-// main.js for what?
+// 程序入口
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'

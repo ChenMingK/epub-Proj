@@ -18,16 +18,16 @@ export const FONT_FAMILY = [
   { font: 'Montserrat' },
   { font: 'Tangerine' }
 ]
-
+// 主题列表
 export function themeList(vue) {
   return [
     {
-      alias: vue.$t('book.themeDefault'),
+      alias: vue.$t('book.themeDefault'), // 国际化文字
       name: 'Default',
       style: {
         body: {
-          'color': '#4c5059',
-          'background': '#cecece',
+          'color': '#4c5059',                         // 字体颜色
+          'background': '#cecece',                    // 背景颜色
           'padding-top': `${realPx(48)}px!important`, // 自适应的padding，留给页眉和页脚
           'padding-bottom': `${realPx(48)}px!important`
         }
@@ -73,24 +73,23 @@ export function themeList(vue) {
 }
 // 全局主题设置功能实现(包括菜单栏等)
 export function addCss(href) {
-  const link = document.createElement('link')
-  link.setAttribute('rel', 'stylesheet') // 属性：样式表
-  link.setAttribute('type', 'text/css')
-  link.setAttribute('href', href)
+  const link = document.createElement('link') // 创建link标签
+  link.setAttribute('rel', 'stylesheet')      // 设置属性：样式表
+  link.setAttribute('type', 'text/css')       // css文件
+  link.setAttribute('href', href)             // 路径
   document.getElementsByTagName('head')[0].appendChild(link) // 相当于通过link标签引入新的css样式
 }
 // 上面用的是添加样式，重复添加只是覆盖之前的效果，加载了多个CSS，需要删除之前的
-// 这里只是删除了重复的
 export function removeCss(href) {
   const links = document.getElementsByTagName('link')
-  for (let i = links.length; i >= 0; i--) {
+  for (let i = links.length; i >= 0; i--) { // 从后往前遍历
     const link = links[i]
     if (link && link.getAttribute('href') && link.getAttribute('href') === href) {
-      link.parentNode.removeChild(link) // 调用head标签的removeChild
+      link.parentNode.removeChild(link) // 调用head标签的removeChild, 要删除的那个节点, 而不是传入节点下标什么的
     }
   }
 }
-// 这里设置一个删除全部的css样式的方法
+// 这里设置一个删除全部的css样式的方法, 通过匹配href属性来删除, 注意不能删除其他的样式
 export function removeAllCss() {
   removeCss(`${process.env.VUE_APP_RES_URL}/theme/theme_default.css`)
   removeCss(`${process.env.VUE_APP_RES_URL}/theme/theme_eye.css`)
