@@ -252,7 +252,7 @@ export default {
               // console.log(this.navigation)
               this.setPagelist(locations) // 命名注意...
               this.setBookAvailable(true) // 允分页完毕后许进度条拖动
-              this.refreshLocation() // 注意这里的刷新
+              this.refreshLocation()      // 注意这里的刷新
           })
       }
   },

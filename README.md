@@ -1,4 +1,4 @@
-# epub-Proj
+# epub-proj
 
 ## Project setup
 ```

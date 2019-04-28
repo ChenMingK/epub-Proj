@@ -7,7 +7,7 @@ import { gotoBookDetail, appendAddToShelf, computeId, removeAddFromShelf } from 
 import { shelf } from '../api/store.js'
 export const ebookMixin = { // 所有组件需要用到的计算属性(vuex)和方法
   computed: {
-    ...mapGetters([
+    ...mapGetters([ 
       'fileName',
       'menuVisible',
       'settingVisible',
@@ -114,6 +114,7 @@ export const ebookMixin = { // 所有组件需要用到的计算属性(vuex)和�
       }
     },
     // cb 可选的回调 思考：这个API target可以传入哪些值? target要跳转到的章节处
+    // 该方法用于电子书显示指定的页数(更准确地说是一个cfi指定的位置)
     display(target, cb) {
       if (target) {
         return this.currentBook.rendition.display(target).then(() => {
@@ -133,6 +134,7 @@ export const ebookMixin = { // 所有组件需要用到的计算属性(vuex)和�
       this.setSettingVisible(-1)
       this.setFontFamilyVisible(false)
     },
+    // $1:占位符, 用时间值代替占位符
     getReadTimeText() {
       return this.$t('book.haveRead').replace('$1', getReadTimeByMinute(this.fileName))
     },
@@ -143,14 +145,8 @@ export const ebookMixin = { // 所有组件需要用到的计算属性(vuex)和�
       }
       this.setMenuVisible(!this.menuVisible)
     },
+    // 获取章节名称, 用于EbookSettingProgress组件
     getSectionName() {
-      // if (this.section) {
-      //   const sectionInfo = this.currentBook.section(this.section)
-      //   if (sectionInfo && sectionInfo.href && this.currentBook && this.currentBook.navigation) { // 注意异步条件
-      //     return this.currentBook.navigation.get(sectionInfo.href).label // 获取对应章节的目录的label
-      //   }
-      // }
-      // return ''
       return this.section ? this.navigation[this.section].label : ''
     }
   }

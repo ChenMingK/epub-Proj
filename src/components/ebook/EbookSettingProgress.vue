@@ -36,23 +36,14 @@ import { ebookMixin } from '../../utils/mixin'
 export default {
     mixins: [ebookMixin],
     methods: {
-        onProgressChange(progress) {
-          this.setProgress(progress).then(() => {
-            this.displayProgress()
-            this.updateProgressBg()
-          })
-        },
-        onProgressInput(progress) {
-          // 将this.displayProgress()放入此处内容也可以随时变化，渲染太费时
-          this.setProgress(progress).then(() => {
-            this.updateProgressBg()
-          }) 
-        },
         // 显示当前进度（拖动完进度触发） 第2个需要缓存阅读进度的地方
-        displayProgress() {
+        onProgressChange() {
           // cfi:locations对象方法->通过百分比来获取cfi，传递个小数
           const cfi = this.currentBook.locations.cfiFromPercentage(this.progress / 100)
           this.display(cfi)
+        },
+        onProgressInput(progress) {
+          this.setProgress(progress)
         },
         // 拖动进度条时颜色发生变化
         updateProgressBg() {
@@ -69,7 +60,7 @@ export default {
           }
         },
         nextSection() {
-          // 最大章节数?
+          // spine: 阅读进度 spine.length: 总共的章节数
           if (this.section < this.currentBook.spine.length - 1 && this.bookAvailable) { 
             this.setSection(this.section + 1).then(() => {
               this.displaySection()
@@ -77,10 +68,11 @@ export default {
           }
         },
         // 切换章节 第1个需要缓存阅读进度的地方
+        // section值存储在vuex中, 通过actions改变
         displaySection() {
           const sectionInfo = this.currentBook.section(this.section) // sectionAPI 返回一个对象
           if (sectionInfo && sectionInfo.href) {
-            this.display(sectionInfo.href)
+            this.display(sectionInfo.href) // rendition.display()
           }
         }
     },
