@@ -86,11 +86,11 @@ $animationType: linear;
 @mixin ellipsis2($line) {
   display: -webkit-box;
   -webkit-box--orient: vertical; // direction
-  -webkit-line-clamp: $line;         // line numbers
+  -webkit-line-clamp: $line;     // line numbers
   white-space: normal;
   overflow: hidden;           
   text-overflow: ellipsis;   
-  word-break: break-all; // 任何情况下都会换行
+  word-break: break-all; // 任何情况下都会换行 keep-all 单词换行
 }
 
 @mixin scroll {

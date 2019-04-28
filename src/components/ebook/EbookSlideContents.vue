@@ -10,7 +10,7 @@
                      v-model="searchText"
                      :placeholder="$t('book.searchHint')"
                      @keyup.enter.exact="search()"
-                     @click="showSearchPage()"> <!--按下确认才会调用search exact精确要求回车-->
+                     @click="showSearchPage()"> <!--keyup是按下按键抬起后触发 exact精确要求回车, 不加的话按shift+enter也会触发-->
           </div> <!--input end-->
           <div class="slide-contents-search-cancel"
                v-if="searchVisible"
@@ -19,7 +19,7 @@
       <div class="slide-contents-book-wrapper" v-show="!searchVisible">
           <div class="slide-contents-book-img-wrapper">
               <img :src="cover" class="slide-contents-book-img">
-          </div>
+          </div><!--封面-->
           <div class="slide-contents-book-info-wrapper">
               <div class="slide-contents-book-title">
                 <span class="slide-contents-book-title-text">{{metadata.title}}</span>
@@ -27,43 +27,39 @@
               <div class="slide-contents-book-author">
                 <span class="slide-contents-book-author-text">{{metadata.creator}}</span>
               </div>
-          </div>
+          </div><!--书本信息-->
           <div class="slide-contents-book-progress-wrapper">
               <div class="slide-contents-book-progress">
                   <span class="progress">{{progress + '%'}}</span>
                   <span class="progress-text">{{$t('book.haveRead2')}}</span>
               </div>
               <div class="slide-contents-book-time">{{getReadTimeText()}}</div>
-          </div>
+          </div><!--阅读进度信息-->
       </div>
-      <div class="scroll-wrapper">
-        <scroll class="slide-contents-list"
-                :top="156"
-                :bottom="48"
-                v-show="!searchVisible">
-          <div class="slide-contents-item" v-for="(item, index) in navigation" :key="index">
-            <span class="slide-contents-item-label"
-                  :class="{'selected': section === index}"
-                  :style="contentItemStyle(item)"
-                  @click="displayContent(item.href)">{{item.label}}</span>
-            <span class="slide-contents-item-page">{{item.page}}</span>
-          </div>
-        </scroll>
-      </div>
-      <div class="scroll-wrapper">
-        <scroll class="slide-search-list"
-                :top="66"
-                :bottom="48"
-                v-show="searchVisible">
-          <!--slot-->
-          <div class="slide-search-item" 
-              v-for="(item, index) in searchList" 
-              :key="index" 
-              v-html="item.excerpt"
-              @click="displayContent(item.cfi, true)">  <!--使用了span替换文本，需要将搜索出的内容作为html载入-->
-          </div>
-        </scroll>
-      </div>
+      <scroll class="slide-contents-list"
+              :top="156"
+              :bottom="48"
+              v-show="!searchVisible">
+        <div class="slide-contents-item" v-for="(item, index) in navigation" :key="index">
+          <span class="slide-contents-item-label"
+                :class="{'selected': section === index}"
+                :style="contentItemStyle(item)"
+                @click="displayContent(item.href)">{{item.label}}</span>
+          <span class="slide-contents-item-page">{{item.page}}</span>
+        </div><!--这个div填入Scroll组件的<slot></slot>中-->
+      </scroll>
+      <scroll class="slide-search-list"
+              :top="66"
+              :bottom="48"
+              v-show="searchVisible">
+        <!--slot-->
+        <div class="slide-search-item" 
+            v-for="(item, index) in searchList" 
+            :key="index" 
+            v-html="item.excerpt"
+            @click="displayContent(item.cfi, true)">  <!--使用了span替换文本，需要将搜索出的内容作为html载入-->
+        </div>
+      </scroll>
   </div>
 </template>
 
@@ -99,8 +95,9 @@
         // Global search 
         /* spineItems为Section对象，管理当前章节的整个内容；
            调用该对象的load方法将book对象作为上下文传入----获取所有文本信息
-           调用该对象的find方法，传入搜索关键字；
-           这里通过遍历的方法将所有章节都进行了一次搜索操作 */ 
+           调用该对象的find方法，传入搜索关键字---实现当前章节检索
+           这里通过遍历的方法将所有章节都进行了一次搜索操作 
+        */ 
         doSearch(q) {
             return Promise.all(
                 this.currentBook.spine.spineItems.map(item => item.load(this.currentBook.load.bind(this.currentBook))
@@ -111,9 +108,10 @@
         // 跳转目录后要隐藏，但是注意不要改display方法，因为不应该影响进度条拖动
         displayContent(target, highlight = false) {
           this.display(target, () => {
+            // 跳转时隐藏菜单栏
             this.hideTitleAndMenu()
             if (highlight) {
-              this.currentBook.rendition.annotations.highlight(target) // annotations class?
+              this.currentBook.rendition.annotations.highlight(target) // annotations class? 文字高亮效果
             }
           })         
         },
@@ -164,8 +162,8 @@
               width: 100%;
               height: px2rem(32);
               font-size: px2rem(14);
-              background: transparent;
-              border: none;
+              background: transparent; // 删除默认背景颜色
+              border: none;            // 删除默认边框
               &:focus {
                   outline: none;  // 删除选中时的边框
               }
@@ -235,9 +233,6 @@
             margin-top: px2rem(5);
         }
     }
-  }
-  .scroll-wrapper {
-    height: px2rem(434);
   }
   .slide-contents-list {
     padding: 0 px2rem(15);

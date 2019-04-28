@@ -65,7 +65,7 @@ export default {
             this.task = setInterval(() => {
                 readTime++
                 if (readTime % 30 === 0) { // 每半分钟记录一次
-                    saveReadTime(this.fileName, readTime)
+                    saveReadTime(this.fileName, readTime) // 缓存阅读时间
                 }
             }, 1000)
         }

@@ -184,10 +184,11 @@ export default {
               })
           })
       },
-      // 解析电子书并保存必要的变量
+      // 解析电子书并通过epubjs提供的API获取到必要的变量, 存入vuex
       parseBook() {
-          // 获取blob链接，该链接可直接获取图片
+          // 获取blob链接，该链接可直接访问到图片
           this.book.loaded.cover.then(cover => {
+              // 生成封面图片的链接
               this.book.archive.createUrl(cover).then(url => {
                   this.setCover(url)
               })
@@ -197,18 +198,18 @@ export default {
               this.setMetadata(metadata)
           })
           this.book.loaded.navigation.then(nav => {
-              const navItem = flatten(nav.toc) // 导航数组扁平化
-              function find(item, level = 0) { // 添加level表示目录层级，顶层：0
-                  return !item.parent ? level : find(navItem.filter(parentItem =>
-                  parentItem.id === item.parent)[0], ++level)
-              }
-              // 目的是给扁平化后的数组添加一个level表示层级，parent为undefined则为顶级（只有1级目录），
-              // 如果有则说明其有子目录，那么递归向下的加level
-              navItem.forEach(item => {
-                  item.level = find(item)
-              })
-              this.setNavigation(navItem) // for vuex
-          })
+            const navItem = flatten(nav.toc) // 导航数组扁平化
+            function find(item, level = 0) { // 添加level表示目录层级，顶层：0
+                return !item.parent ? level : find(navItem.filter(parentItem =>
+                parentItem.id === item.parent)[0], ++level) // parent指向父级id, 若没有则1为undefined
+            }
+            // 目的是给扁平化后的数组添加一个level表示层级，parent为undefined则为顶级（只有1级目录），
+            // 如果有则说明其有子目录，那么递归向下的加level
+            navItem.forEach(item => {
+                item.level = find(item)
+            })
+            this.setNavigation(navItem) // for vuex
+        })
       },
       initEpub (url) {
           this.book = new Epub(url)      // 可以传入url，也可以直接传入blob对象
