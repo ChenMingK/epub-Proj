@@ -1,5 +1,6 @@
 // 这个文件管理静态变量和通用方法
 import { getReadTime } from './localStorage'
+import { realPx } from './utils' 
 export const FONT_SIZE_LIST = [
   { fontSize: 12 },
   { fontSize: 14 },
@@ -26,7 +27,9 @@ export function themeList(vue) {
       style: {
         body: {
           'color': '#4c5059',
-          'background': '#cecece'
+          'background': '#cecece',
+          'padding-top': `${realPx(48)}px!important`, // 自适应的padding，留给页眉和页脚
+          'padding-bottom': `${realPx(48)}px!important`
         }
       }
     },
@@ -36,7 +39,9 @@ export function themeList(vue) {
       style: {
         body: {
           'color': '#5c5b56',
-          'background': '#c6c2b6'
+          'background': '#c6c2b6',
+          'padding-top': `${realPx(48)}px!important`,
+          'padding-bottom': `${realPx(48)}px!important`
         }
       }
     },
@@ -46,7 +51,9 @@ export function themeList(vue) {
       style: {
         body: {
           'color': '#404c42',
-          'background': '#a9c1a9'
+          'background': '#a9c1a9',
+          'padding-top': `${realPx(48)}px!important`,
+          'padding-bottom': `${realPx(48)}px!important`
         }
       }
     },
@@ -56,7 +63,9 @@ export function themeList(vue) {
       style: {
         body: {
           'color': '#cecece',
-          'background': '#000000'
+          'background': '#000000',
+          'padding-top': `${realPx(48)}px!important`,
+          'padding-bottom': `${realPx(48)}px!important`
         }
       }
     }
@@ -96,4 +105,8 @@ export function getReadTimeByMinute(fileName) {
   } else {
     return Math.ceil(readTime / 60) // 向上取整
   }
+}
+
+export function flatten(array) {
+  return [].concat(...array.map(item => [].concat(item, ...flatten(item.subitems))))
 }

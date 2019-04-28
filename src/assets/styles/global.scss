@@ -1,5 +1,7 @@
-@import "reset";
-@import "./mixin";
-@import "./transition.scss"
-
+// global.scss用于聚合所有的scss文件
+@import "./reset.scss";
+@import "./mixin.scss";
+@import "./transition.scss";
+@import "./home.scss";
+@import "./flapCard.scss";
 

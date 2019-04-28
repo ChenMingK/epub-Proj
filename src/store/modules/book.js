@@ -1,17 +1,18 @@
+// vuex存储在哪?内存?过大会怎么样?
 const book = {
   state: {
-    fileName: '',
-    menuVisible: false,
-    settingVisible: -1,
-    defaultFontSize: 16,
-    defaultFontFamily: 'Default',
-    fontFamilyVisible: false, // for EbookSettingFontPopup component
-    defaultTheme: 'default',
-    bookAvailable: false,
+    fileName: '',                 // 存储路径中的文件名
+    menuVisible: false,           // 控制菜单栏的显示
+    settingVisible: -1,           // -1:不显示 0:显示字号 1:主题 2:进度 3:目录
+    defaultFontSize: 16,          // 默认电子书字体大小
+    defaultFontFamily: 'Default', // 默认电子书字体
+    fontFamilyVisible: false,     // for EbookSettingFontPopup component
+    defaultTheme: 'default',      // 默认电子书主题
+    bookAvailable: false,         // 电子书加载是否完成
     progress: 0,
-    section: 0, // 当前章节位置 Number
+    section: 0,                   // 当前章节位置 Number
     isPaginating: true,
-    currentBook: null,
+    currentBook: null,            // 电子书对象
     navigation: null,
     cover: null,
     metadata: null,

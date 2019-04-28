@@ -3,22 +3,31 @@
 import Storage from 'web-storage-cache'
 const localStorage = new Storage()
 
-export function setLocalStorage(key, value) {
+export function setLocalStorage(key, value) { // key, value形式存储
   return localStorage.set(key, value)
 }
 
-export function getLocalStorage(key) {
+export function getLocalStorage(key) { // 传入key即可获取数据
   return localStorage.get(key)
 }
 
-export function removeLocalStorage(key) {
+export function removeLocalStorage(key) { // 删除localStorage中的值
   return localStorage.delete(key)
 }
 
-export function clearLocalStorage() {
+export function clearLocalStorage() {   // 清除缓存
   return localStorage.clear()
 }
+// for bookShelf
+export function saveBookShelf(shelf) {
+  return setLocalStorage('shelf', shelf)
+}
 
+export function getBookShelf(shelf) {
+  return getLocalStorage('shelf', shelf)
+}
+
+// for bookRead 以每个电子书书名为一个对象来存储, 其中的字号、主题等针对这本书
 export function setBookObject(fileName, key, value) {
   let book = getLocalStorage(`${fileName}-info`)
   if (!book) {
@@ -36,11 +45,11 @@ export function getBookObject(fileName, key) {
     return null
   }
 }
-
+// 获取该书的字体
 export function getFontFamily(fileName) {
   return getBookObject(fileName, 'fontFamily')
 }
-
+// 缓存该书的字体
 export function saveFontFamily(fileName, font) {
   return setBookObject(fileName, 'fontFamily', font)
 }
@@ -108,4 +117,12 @@ export function saveLocation(fileName, location) {
 
 export function getLocation(fileName) {
   return getBookObject(fileName, 'location')
+}
+
+export function saveBookmark(fileName, bookmark) {
+  setBookObject(fileName, 'bookmark', bookmark)
+}
+
+export function getBookmark(fileName) {
+  return getBookObject(fileName, 'bookmark')
 }

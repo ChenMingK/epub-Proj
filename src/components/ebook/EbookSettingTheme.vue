@@ -39,7 +39,7 @@ export default {
     position: absolute;
     bottom: px2rem(48);
     left: 0;
-    z-index: 101;
+    z-index: 200;
     width: 100%;
     height: px2rem(90);
     background: white;

@@ -3,9 +3,9 @@
     <div class="slide-content-wrapper" v-show="menuVisible && settingVisible === 3">
         <transition name="slide-right"> <!--内容再推出-->
             <div class="content" v-if="settingVisible === 3">
-                <div class="content-page-wrapper">
+                <div class="content-page-wrapper" v-if="bookAvailable">
                     <div class="content-page">
-                        <component :is="currentTab === 1 ? content: bookmark"></component> <!--动态组件-->
+                        <component :is="currentTab === 1 ? content : bookmark"></component> <!--动态组件-->
                     </div>
                     <!--下方tab-->
                     <div class="content-page-tab">
@@ -19,6 +19,9 @@
                              {{$t('book.bookmark')}}</div>
                     </div>
                 </div>
+                <div class="content-empty" v-else>
+                  <ebook-loading></ebook-loading>
+                </div>
             </div>
         </transition>
         <div class="content-bg" @click="hideTitleAndMenu()"></div> <!--公共方法-->
@@ -29,18 +32,23 @@
 <script>
 import { ebookMixin } from '../../utils/mixin'
 import EbookSlideContents from './EbookSlideContents'
+import EbookSlideBookmark from './EbookSlideBookmark'
+import EbookLoading from './EbookLoading'
 export default {
     mixins: [ebookMixin],
+    components: {
+      EbookLoading
+    },
     data: function () {
         return {
             currentTab: 1,
             content: EbookSlideContents, // 动态组件在这里注册？就是个对象?
-            bookmark: null
+            bookmark: EbookSlideBookmark
         }
     },
     methods: {
         selectTab(tab) {
-            this.currentTab = tab;
+            this.currentTab = tab
         }
     }
 }
@@ -68,7 +76,7 @@ export default {
             .content-page {
                 flex: 1;
                 width: 100%;
-                overflow: hidder;
+                overflow: hidden;
             }
             .content-page-tab {
                 display: flex;
@@ -84,6 +92,11 @@ export default {
                     }
                 }
             }
+        }
+        .content-empty {
+          width: 100%;
+          height: 100%;
+          @include center;
         }
     }
     .content-bg {

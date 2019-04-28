@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import { mapGetters} from 'vuex'  // 映射 + 混入 computed
+// import { mapGetters } from 'vuex'  // 映射 + 混入 computed
 import { ebookMixin } from '../../utils/mixin'
 export default {
     mixins: [ebookMixin],
     methods: {
         back () {
-            
+            this.$router.go(-1) // 返回上一个路由
         }
     }
 }

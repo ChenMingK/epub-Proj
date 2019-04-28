@@ -1,9 +1,11 @@
 <template>
-  <div> 
-  <transition name="slide-up">
-      <div class="menu-wrapper" 
-           :class="{'hide-box-shadow': !menuVisible || settingVisible >= 0}" 
-           v-show="menuVisible">
+  <div>
+    <transition name="slide-up">
+      <div
+        v-show="menuVisible"
+        class="menu-wrapper"
+        :class="{'hide-box-shadow': !menuVisible || settingVisible >= 0}"
+      >
         <div class="icon-wrapper">
           <span class="icon-menu" @click="showSetting(3)"></span>
         </div>
@@ -15,15 +17,15 @@
         </div>
         <div class="icon-wrapper">
           <span class="icon-A" @click="showSetting(0)"></span>
-        </div>
+        </div> <!--点击对应的图标显示不同的设置面板-->
       </div>
-  </transition>
-  <ebook-setting-font></ebook-setting-font> 
-  <ebook-setting-font-popup></ebook-setting-font-popup>
-  <ebook-setting-theme></ebook-setting-theme>
-  <ebook-setting-progress></ebook-setting-progress>
-  <ebook-slide></ebook-slide>
-  </div>
+    </transition>
+    <ebook-setting-font></ebook-setting-font>
+    <ebook-setting-font-popup></ebook-setting-font-popup>
+    <ebook-setting-theme></ebook-setting-theme>
+    <ebook-setting-progress></ebook-setting-progress>
+    <ebook-slide></ebook-slide>
+  </div> <!--空的div包裹-->
 </template>
 
 <script>
@@ -34,19 +36,19 @@ import EbookSettingProgress from './EbookSettingProgress'
 import EbookSlide from './EbookSlide'
 import { ebookMixin } from '../../utils/mixin'
 export default {
-    mixins: [ebookMixin],
-    components: {
-      EbookSettingFont,
-      EbookSettingFontPopup,
-      EbookSettingTheme,
-      EbookSettingProgress,
-      EbookSlide
-    },
-    methods: {
-        showSetting (key) {
-          this.setSettingVisible(key)
-        }
+  components: {
+    EbookSettingFont,
+    EbookSettingFontPopup,
+    EbookSettingTheme,
+    EbookSettingProgress,
+    EbookSlide
+  },
+  mixins: [ebookMixin],
+  methods: {
+    showSetting(key) {
+      this.setSettingVisible(key)
     }
+  }
 }
 </script>
 
@@ -56,7 +58,7 @@ export default {
     position: absolute;
     bottom: 0;
     left: 0;
-    z-index: 102;
+    z-index: 200;
     display: flex;
     width: 100%;
     height: px2rem(48);
