@@ -11,6 +11,7 @@
       <hot-search :label="$t('home.historySearch')"
                   :btn="$t('home.clear')"
                   :hotSearch="searchList.historySearch"></hot-search>
+      <!--由2个HotSearch组件和中间的一条线组成-->
     </scroll>
   </transition>
 </template>
@@ -141,8 +142,7 @@
   @import "../../assets/styles/global";
   .hot-search-wrapper {
     width: 100%;
-    // height: 100%;
-    height: px2rem(667); // 后面再改
+    height: 100%;
     background: white;
     overflow-x: hidden;
     overflow-y: scroll;

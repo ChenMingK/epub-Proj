@@ -27,12 +27,12 @@
       }
     },
     methods: {
-      // 鼠标滚动时监听高度偏移量, scrollTop ? pageYOffset?
+      // 鼠标滚动时监听高度偏移量并传递给父组件, scrollTop ? pageYOffset?
       handleScroll(e) {
         const offsetY = e.target.scrollTop || window.pageYOffset || document.body.scrollTop
         this.$emit('onScroll', offsetY)
       },
-      //初始化组件高度, 利用传入的top 和 bottom, 且未div添加scroll事件监听器
+      // 初始化组件高度, 利用传入的top 和 bottom, 且未div添加scroll事件监听器
       refresh() {
         if (this.$refs.scrollWrapper) {
           this.$refs.scrollWrapper.style.height = window.innerHeight - 
@@ -40,6 +40,10 @@
           this.$refs.scrollWrapper.addEventListener('scroll', this.handleScroll)
         }
       },
+      // 提供给外部的方法, 比如需要重置滚动的位置则传入0, 0参数
+      scrollTo(x, y) {
+        this.$refs.scrollWrapper.scrollTo(x, y)
+      }
     },
     mounted() {
       this.refresh()

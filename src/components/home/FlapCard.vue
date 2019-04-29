@@ -5,10 +5,10 @@
         <div class="flap-card-circle">
           <div class="flap-card-semi-circle flap-card-semi-circle-left"
                :style="semiCircleStyle(item, 'left')"
-               ref="left"></div>
+               ref="left"></div><!--左半圆-->
           <div class="flap-card-semi-circle flap-card-semi-circle-right"
                :style="semiCircleStyle(item, 'right')"
-               ref="right"></div>
+               ref="right"></div><!--右半圆-->
         </div>
       </div>
       <div class="point-wrapper"> <!--烟花DOM-->
@@ -220,7 +220,7 @@
   @import "../../assets/styles/flapCard.scss";
   .flap-card-wrapper {
     width: 100%;
-    height: 100%; // 100%???
+    height: 100%;
     z-index: 1000;
     background: rgba(0, 0, 0, .6);
     @include center;

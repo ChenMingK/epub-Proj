@@ -80,6 +80,9 @@ const actions = {
   },
   setCurrentType({ commit }, type) {
     return commit('SET_CURRENT_TYPE', type)
+  },
+  setIfStoreHomeScrollShow({ commit }, visible) {
+    return commit('SET_IF_STORE_HOME_SEARCH_SHOW', visible)
   }
 }
 

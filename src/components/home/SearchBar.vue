@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="search-bar" :class="{'hide-title': !titleVisible, 'hide-shadow': !shadowVisible}">
-      <transition name="title-move"> <!--触发过度的条件？整体高度改变了-->
+      <transition name="title-move"> <!--触发过渡的条件？整体高度改变了-->
         <div class="search-bar-title-wrapper" v-show="titleVisible"> 
           <div class="title-text-wrapper">
             <span class="title-text title">{{$t('home.title')}}</span>
@@ -50,7 +50,7 @@
     },
     watch: {
       offsetY(offsetY) {
-        // console.log('SearchBar: wtf?')
+        // vuex中变量, Scroll组件滑动时设置
         if (offsetY > 0) {
           this.hideTitle()
           this.showShadow()
@@ -93,7 +93,7 @@
         } else {
           this.$router.push('/store/shelf')
         }
-        
+        this.setIfStoreHomeScrollShow(true)
         // this.showTitle()
       },
       hideTitle() {
@@ -125,6 +125,7 @@
         this.hideTitle()
         this.hideShadow()
         this.hotSearchVisible = true
+        this.setIfStoreHomeScrollShow(false)
         this.$nextTick(() => { // 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
           this.$refs.hotSearch.reset()
         })  

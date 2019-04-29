@@ -1,8 +1,8 @@
 <template>
   <div class="store-home">
-    <search-bar></search-bar>
+    <search-bar ref="searchBar"></search-bar>
     <flap-card :data="random"></flap-card> <!--传递一本随机的图书给子组件-->
-    <scroll :top="scrollTop" @onScroll="onScroll" ref="scroll">
+    <scroll :top="scrollTop" @onScroll="onScroll" ref="scroll" v-show="this.ifStoreHomeScrollShow"> <!--vuex控制-->
       <div class="banner-wrapper">
         <div class="banner-img" :style="{backgroundImage: `url('${banner}')`}"></div>
       </div>

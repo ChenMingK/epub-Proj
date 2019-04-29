@@ -36,8 +36,9 @@ export default {
       onMouseEnter(e) {
         this.mouseMove = 1
         this.mouseStartTime = e.timeStamp
+        // 禁止鼠标事件传播
         e.preventDefault()   // 通知浏览器不要执行与事件关联的默认动作。
-        e.stopPropagation()  // 不再派发事件。 what?
+        e.stopPropagation()  // 禁止冒泡
       },
       // 鼠标移动
       onMouseMove(e) {
@@ -46,7 +47,7 @@ export default {
         } else if (this.mouseMove === 2) {
           let offsetY = 0
           if (this.firstOffsetY) {
-            offsetY = e.clientY - this.firstOffsetY
+            offsetY = e.clientY - this.firstOffsetY // 可以直接通过e.clientY获取鼠标当前位置
             this.$store.commit('SET_OFFSETY', offsetY)
           } else {
             this.firstOffsetY = e.clientY
@@ -63,6 +64,7 @@ export default {
           this.mouseMove = 3
         }
         // 优化：追加判断点击时间，而不仅仅用移动来判断应该触发什么
+        // 判断点击结束时间和开始时间的时间差，如果过小统一判定为点击, 防止带轻微移动的点击的误判
         this.mouseEndTime = e.timeStamp
         const time = this.mouseEndTime - this.mouseStartTime
         if (time < 200) {
@@ -90,7 +92,7 @@ export default {
       },
       onMaskClick(e) {
         if (this.mouseMove === 2) {
-        } else if (this.mouseMove === 1 || this.mouseMove === 4) {
+        } else if (this.mouseMove === 1 || this.mouseMove === 4) { // 进入的时候什么都没干则认为是点击事件
           const offsetX = e.offsetX
           const width = window.innerWidth
           if (offsetX > 0 && offsetX < width * 0.3) {
@@ -161,7 +163,10 @@ export default {
           this.rendition = this.book.renderTo('read', {       // 需要绑定一个DOM
               width: innerWidth,   // window.innerHeight
               height: innerHeight,
-              method: 'default'    // 这个是微信的兼容性配置?
+              method: 'default'
+              /* flow: 'scrolled'可以使用滚动阅读模式
+                 但是目前有兼容性问题, 之后可以加个阅读模式切换
+              */
           })
           const location = getLocation(this.fileName) // fileName是在本地存储的书名（文件名）
           // 无论location是否在缓存中都可以用这个方法实现，如果不在会自动判断location是否存在来返回正确结果

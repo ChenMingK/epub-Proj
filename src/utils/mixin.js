@@ -157,14 +157,16 @@ export const storeHomeMixin = {
     ...mapGetters([
       'offsetY',
       'hotSearchOffsetY',
-      'flapCardVisible'
+      'flapCardVisible',
+      'ifStoreHomeScrollShow'
     ])
   },
   methods: {
     ...mapActions([
       'setOffsetY',
       'setHotSearchOffsetY',
-      'setFlapCardVisible'
+      'setFlapCardVisible',
+      'setIfStoreHomeScrollShow'
     ]),
     // 路由跳转
     showBookDetail(book) {

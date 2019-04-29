@@ -12,7 +12,7 @@ export default new Router({
     {
       path: '/ebook',
       component: () => import('./views/ebook/index.vue'), // 路由懒加载，这里用的是ES6的语法  import()函数是动态加载 import 是静态加载
-      children: [ // 动态路由
+      children: [ // 动态路由, 可以传递路径参数
         {
           path: ':fileName',
           component: () => import('./components/ebook/EbookReader.vue')
@@ -25,7 +25,7 @@ export default new Router({
       redirect: '/store/shelf', // #/store -> #/store/home
       children: [
         {
-          path: 'home',
+          path: 'home', // children使用相对路径 可以通过store/home来找到
           component: () => import('./views/store/StoreHome.vue')
         },
         {
