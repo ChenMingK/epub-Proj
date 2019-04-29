@@ -70,7 +70,7 @@
           font-size: px2rem(14);
           line-height: px2rem(15);
           max-height: px2rem(45);
-          @include ellipsis2(3);
+          @include ellipsis2(3); // 文本内容缩略
         }
       }
     }

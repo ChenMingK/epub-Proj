@@ -51,7 +51,7 @@
     watch: {
       // values: function (newValue, oldValue)
       offsetY(v) { 
-        // 不在多余的状态监听
+        // 不在多余的状态监听, 电子书还在分页不允许下拉, 有设置面板也不允许
         if (!this.bookAvailable || this.menuVisible || this.settingVisible >= 0) { return }
         if (v >= this.height && v <= this.threshold) {
           this.beforeThreshold(v)
@@ -91,6 +91,7 @@
           }
         this.isFixed = false
       },
+      // 状态2
       beforeThreshold(v) {
           // console.log('到达第二阶段') 吸顶效果 状态二：未到达临界状态
           this.$refs.bookmark.style.top = `${-v}px` // 做相对位移达到吸顶效果
@@ -100,6 +101,7 @@
             iconDown.style.transform = 'rotate(0deg)'
           }
       },
+      // 状态3
       afterThreshold(v) {
           // console.log('到达第三阶段') 状态三：超越临界状态
           this.$refs.bookmark.style.top = `${-v}px`
@@ -119,7 +121,7 @@
           }
       },
       restore() {
-        // 状态四： 归位保存书签标记
+        // 状态四： 归位保存书签标记, 等200ms过渡动画完成后执行
         setTimeout(() => {
           this.$refs.bookmark.style.top = `${-this.height}px`
           this.$refs.iconDown.style.transform = 'rotate(0deg)'
@@ -143,13 +145,15 @@
         const cfibase = currentLocation.start.cfi.replace(/!.*/, '')
         const cfistart = currentLocation.start.cfi.replace(/.*!/, '').replace(/\)$/, '')
         const cfiend = currentLocation.end.cfi.replace(/.*!/, '').replace(/\)$/, '')
+        // 将cfistart和cfiend拼接
         const cfirange = `${cfibase}!,${cfistart},${cfiend})`// 注意结尾的括号 之间用逗号隔开
         // console.log(cfirange)
+        // epubjs提供getRange方法获取Range对象, 其中有文本内容
         this.currentBook.getRange(cfirange).then(range => {
-          const text = range.toString().replace(/\s\s/g, '') // 2个空格变为空？
+          const text = range.toString().replace(/\s\s/g, '') // 去除多余的空格
           this.bookmark.push({
             cfi: currentLocation.start.cfi, // 用于书签跳转,判断当前页是否为书签
-            text: text // 文本？why？
+            text: text // 文本
           })
           saveBookmark(this.fileName, this.bookmark)
         })
@@ -160,7 +164,7 @@
         const cfi = currentLocation.start.cfi
         this.bookmark = getBookmark(this.fileName)
         if (this.bookmark) {
-          saveBookmark(this.fileName, this.bookmark.filter(item => item.cfi !== cfi)) // ???
+          saveBookmark(this.fileName, this.bookmark.filter(item => item.cfi !== cfi)) // 过滤掉
           this.setIsBookmark(false) // 当前页不是书签
         }
       }

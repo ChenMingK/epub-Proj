@@ -19,7 +19,7 @@ const book = {
     paginate: '',
     pagelist: null,
     offsetY: 0,
-    isBookmark: null
+    isBookmark: null              // 当前页是否为书签页
   },
   // -1-不显示 0-字号 1-主题 2-进度 3-目录
   mutations: {
