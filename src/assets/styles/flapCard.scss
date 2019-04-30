@@ -1,5 +1,5 @@
 @import "mixin";
-
+// 颜色定义, 小球最后会变透明消失, 所以设置一个透明色
 $color-green: rgb(59, 201, 22);
 $color-pink: rgb(255, 102, 159);
 $color-blue: rgb(74, 171, 255);
@@ -8,9 +8,10 @@ $color-green-transparent: rgba(59, 201, 22, .5);
 $color-pink-transparent: rgba(255, 102, 159, .5);
 $color-blue-transparent: rgba(74, 171, 255, .5);
 $color-yellow-transparent: rgba(255, 198, 102, .5);
-// 运动轨迹的数组，用括号括起
+// 运动轨迹的数组，scss数组用括号括起
 // 起始、终止位置，宽、高、颜色
 $moves: (
+        // startX, startY: 起始位置 endX, endY: 运动终止位置 width, height: 小球宽高 一共18个小球
         (startX: 0, startY: 0, endX: 0, endY: 55, width: 6, height: 6, background: $color-green),
         (startX: 0, startY: 0, endX: 15, endY: 60, width: 4, height: 4, background: $color-pink-transparent),
         (startX: 0, startY: 0, endX: 35, endY: 45, width: 4, height: 4, background: $color-blue-transparent),
@@ -33,19 +34,19 @@ $moves: (
 
 // $index 第几个小球
 @mixin move($index) {
-  $item: nth($moves, $index); // nth: scss默认函数，从moves中获取对象
-  $keyframesName: "move" + $index; // 每个小球创建一个独特的动画
+  $item: nth($moves, $index);      // nth: scss默认函数，从moves中获取对象, 例如$index值为1, 则从moves数组中找到第一个对象
+  $keyframesName: "move" + $index; // 每个小球创建一个独特的动画名称, 动画名称不能重复
   $animationTime: .75s;
-  $animationType: linear;
+  $animationType: linear;         // 通过scss变量统一控制所有的小球样式
   $animationIterator: 1;
-  $width: map-get($item, width); // map-get: 从对象中获取属性，与nth配合使用
+  $width: map-get($item, width);  // map-get: scss预设方法,从对象中获取属性，与nth配合使用
   $height: map-get($item, height);
   $backgroud: map-get($item, background);
   $startX: map-get($item, startX);
   $startY: map-get($item, startY);
   $endX: map-get($item, endX);
   $endY: map-get($item, endY);
-
+  // px2rem在mixin.scss中定义所以要@import mixin.scss
   width: px2rem($width);
   height: px2rem($height);
   background: $backgroud;

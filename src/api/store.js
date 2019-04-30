@@ -30,10 +30,11 @@ export function download(book, onSuccess, onError, onProgress) {
         if (onError) onError(err)
       })
 }
+// 书城首页要使用的请求方法
 export function home() {
   return axios({
     method: 'get',
-    url: `${process.env.VUE_APP_BASE_URL}/book/home`
+    url: `${process.env.VUE_APP_BASE_URL}/book/home` // BASE_URL定义在.env.development中
   })
 }
 

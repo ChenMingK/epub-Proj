@@ -65,7 +65,8 @@
       }
     },
     mounted() {
-      // axios接受？？都是异步的
+      // axios
+      // 请求图书数据并获取随机的一本图书(用于随机推荐动画后展示)
       home().then(response => {
         if (response && response.status) {
           const data = response.data

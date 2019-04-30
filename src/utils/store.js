@@ -9,7 +9,7 @@ export const flapCardList = [
     b: 159,
     imgLeft: 'url(' + require('@/assets/images/gift-left.png') + ')',
     imgRight: 'url(' + require('@/assets/images/gift-right.png') + ')',
-    backgroundSize: '50% 50%',
+    backgroundSize: '50% 50%', // 控制背景大小, 以父元素的百分比来设置图像的宽度和高度
     zIndex: 100, // 控制卡片位置
     rotateDegree: 0 // 转动角度
   },
@@ -293,6 +293,7 @@ export function filterSelectedBook(list) {
   })
 }
 
+// 点击阅读详情后会跳转到书本详情页(组件/视图)
 export function showBookDetail(vue, book) {
   vue.$router.push({
     path: '/store/detail',

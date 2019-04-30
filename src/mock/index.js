@@ -15,7 +15,8 @@
 
 // export default Mock
 import Mock from 'mockjs'
-import home from './bookHome'
+// 各个模块的数据
+import home from './bookHome'         
 import shelf from './bookShelf'
 import list from './bookList'
 import flatList from './bookFlatList'
