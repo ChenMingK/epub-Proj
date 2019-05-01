@@ -14,6 +14,8 @@ npm run serve
 ```
 npm run build
 ```
+## Show
+<img src="https://github.com/ChenMingK/ImagesStore/blob/master/imgs/epubProjGif.gif" width=375px>
 
 ## Contents
 - 项目流程及整体结构
