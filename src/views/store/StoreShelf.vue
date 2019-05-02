@@ -25,7 +25,7 @@
     mixins: [storeShelfMixin],
     data: function() {
       return {
-        scrollBottom: 0
+        scrollBottom: 0 // 处于编辑模式时, 改变滚动组件整体高度, 使之不为底部组件覆盖
       }
     },
     components: {
@@ -36,9 +36,10 @@
       ShelfFooter
     },
     watch: {
-      // 让scroll组件距底部有一个距离
+      // 让scroll组件距底部有一个距离, 监听vuex isEditMode, 是否为编辑模式
       isEditMode(isEditMode) {
         this.scrollBottom = isEditMode ? 48 : 0
+        // 这里需要等待DOM变化完成之后(界面响应变化完成后)再调用
         this.$nextTick(() => {
           this.$refs.scroll.refresh()
         })
@@ -50,7 +51,7 @@
       }
     },
     mounted: function() {
-      this.getShelfList()
+      this.getShelfList()    // 获取书架接口数据
       this.setShelfCategory([])
       this.setCurrentType(1) // 当前处于书架列表
     }

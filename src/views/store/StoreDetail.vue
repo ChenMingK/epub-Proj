@@ -194,7 +194,7 @@
           path: `/ebook/${this.bookItem.categoryText}|${this.fileName}`
         })
       },
-      // 听书
+      // 跳转到听书界面
       trialListening() {
         // 如果电子书已经缓存，从IndexedDB中读取电子书
         getLocalForage(this.bookItem.fileName, (err, blob) => {
@@ -283,7 +283,7 @@
       },
       // 电子书详情页初始化
       init() {
-        // 获取电子书书名
+        // 从路由中获取电子书书名
         this.fileName = this.$route.query.fileName
         // 获取电子书分类
         this.categoryText = this.$route.query.category
@@ -303,7 +303,8 @@
               if (rootFile.startsWith('/')) {
                 rootFile = rootFile.substring(1, rootFile.length)
               }
-              // 根据rootFile拼接出opf文件路径
+              // 根据rootFile拼接出opf文件路径, 通过opf路径可以解析电子书, 因为电子书.epub解压后OEBPS中的
+              // content.opf文件包含整本电子书信息, 这种方式不需要下载整本电子书
               this.opf = `${process.env.VUE_APP_EPUB_OPF_URL}/${this.fileName}/${rootFile}`
               // 解析电子书
               this.parseBook(this.opf)

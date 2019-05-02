@@ -1,5 +1,5 @@
 <template>
-  <div class="shelf-footer" v-show="isEditMode">
+  <div class="shelf-footer" v-show="isEditMode"><!--只在编辑模式才显示-->
     <div class="shelf-footer-tab-wrapper"
          :class="{'is-selected': isSelected}" 
          v-for="item in tabs" 
@@ -29,7 +29,7 @@
     mixins: [storeShelfMixin],
     data: function() {
       return {
-        popupMenu: null // 该公用组件作为变量
+        popupMenu: null // 该公用组件作为变量, 方便直接调用其方法
       }
     },
     computed: {
@@ -60,7 +60,12 @@
           }
         ]
       },
-      // 判断是否属于私密阅读状态
+      // 判断是否属于私密阅读状态, 模拟私密阅读
+      /*
+        1.没有选中图书
+        2.选中了多个图书---都不为private状态
+        3.选中了多个图书---既有private也有非private
+      */
       isPrivate() {
         if (!this.isSelected) {
           return false
@@ -68,6 +73,7 @@
           return this.shelfSelected.every(item => item.private) // 每本书都是private状态
         }
       },
+      // 是否已缓存
       isDownload() {
         if (!this.isSelected) {
           return false
@@ -84,24 +90,25 @@
         const toast = this.toast({
           text // text: text
         })
-        toast.continueShow()
+        toast.continueShow() // 让该Toast持续显示
         return new Promise((resolve, reject) => {
-          // 异步请求下载，这个axios方法在store.js
+          // 异步请求下载，这个axios方法在store.js, 参数:book, onSuccess, onError, (onProgress) 
           download(book, res => {
             // console.log(res)
             // console.log('下载完毕') 
             toast.remove() // 不用hide()用remove，让toast组件重新实例化;这不是组件的方法是create-vue-api方法?
             resolve(res)
-          }, reject, progressEvent => { // 这什么写法?
+          }, reject, progressEvent => { // 下载状态改变时触发, 配合axios的onDownloadProgress使用
             // console.log(progressEvent) // loaded total => loaded/total = progress
             const progress = Math.floor(progressEvent.loaded / progressEvent.total * 100) + '%'
             text = this.$t('shelf.progressDownload').replace('$1', `${book.fileName}.epub(${progress})`)
+            // 转换成"正在下载xxx.epub(xx%)"
             // console.log(text)
             toast.updateText(text)
           })
         })
       },
-      // indexedDB缓存逻辑
+      // indexedDB缓存逻辑, 缓存选中的图书
       async downloadSelectedBook() {
         for (let i = 0; i < this.shelfSelected.length; i++) {
           await this.downloadBook(this.shelfSelected[i])
@@ -110,10 +117,23 @@
           })
         }
       },
+      // 离线缓存逻辑
+      async setDownload() {
+        this.onComplete()
+        if (this.isDownload) {
+          this.removeSelectedBook() // 删除缓存
+        } else {
+          await this.downloadSelectedBook() // 下载成功的对话框要等待下载完成
+          saveBookShelf(this.shelfList)     // 改变vuex中shelfList的save状态
+          this.simpleToast(this.$t('shelf.setDownloadSuccess')) // 组件更新过程中的问题?传入text再传入导致没更新
+        }
+      },
       // for removeSelectedBook
       removeBook(book) {
         return new Promise((resolve, reject) => {
-          removeLocalStorage(`${book.categoryText}/${book.fileName}`) // key的结构:分类'/'电子书名称
+          // Economics/2018_Book_ApplyingTheKaizenInAfrica-info localStorage存的啥?cfi?
+          removeLocalStorage(`${book.categoryText}/${book.fileName}-info`) // key的结构:分类'/'电子书名称-info
+          // 2018_Book_InklusivesWachstumUndWirtschaf
           removeLocalForage(`${book.fileName}`) // indexedDB的key就是书名
           resolve(book) // 返回结果
         })
@@ -137,21 +157,10 @@
         this.setIsEditMode(false)
         saveBookShelf(this.shelfList) // 本地缓存?真正改变的是shelfList
       },
-      // 离线缓存逻辑
-      async setDownload() {
-        this.onComplete()
-        if (this.isDownload) {
-          this.removeSelectedBook() // 删除缓存
-        } else {
-          await this.downloadSelectedBook() // 下载成功的对话框要等待下载完成
-          saveBookShelf(this.shelfList)
-          this.simpleToast(this.$t('shelf.setDownloadSuccess')) // 组件更新过程中的问题?传入text再传入导致没更新
-        }
-      },
       // "私密阅读"功能
       setPrivate() {
         let isPrivate
-        // this.isPrivate是计算属性
+        // this.isPrivate是计算属性, 都不是或部分不是private状态都显示"开启私密阅读"
         if (this.isPrivate) {
           isPrivate = false
         } else {
@@ -189,6 +198,8 @@
           }).show()
       },
       showDownload() {
+        // 传递给Popup组件的参数, 标题, 按钮
+        // 按钮为对象, 传入click点击事件
         this.popupMenu = this.popup({
             title: this.isDownload ? this.$t('shelf.removeDownloadTitle') : this.$t('shelf.setDownloadTitle'),
             btn: [
@@ -254,16 +265,16 @@
         // 设定选择不同的Tab对应的功能
         switch (item.index) {
           case 1:
-            this.showPrivate()
+            this.showPrivate() // 私密阅读:Popup
             break
           case 2:
-            this.showDownload()
+            this.showDownload() // 离线缓存:Popup
             break
           case 3:        
-            this.dialog().show()
+            this.dialog().show() // 分组:Dialog
             break
           case 4:
-            this.showRemove()
+            this.showRemove() // 移出书架:Popup
             break
           default: 
             break

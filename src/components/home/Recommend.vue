@@ -1,6 +1,6 @@
 <template>
   <div class="recommend">
-    <title-view :label="$t('home.recommend')" :btn="$t('home.seeAll')"></title-view>
+    <title-view :label="$t('home.recommend')" :btn="$t('home.seeAll')" @onClick="showBookCategory"></title-view>
     <div class="recommend-list">
       <div class="recommend-item" v-for="(item, index) in data" :key="index" @click="showBookDetail(item)">
         <div class="img-wrapper">
@@ -17,6 +17,7 @@
 
 <script type="text/ecmascript-6">
   import TitleView from './Title'
+  import { categoryText, getCategoryName } from '../../utils/store'
   import { storeHomeMixin } from '../../utils/mixin'
 
   export default {
@@ -26,6 +27,20 @@
     },
     props: {
       data: Array
+    },
+    methods: {
+      showBookCategory() {
+        this.$router.push({
+          path: '/store/list',
+          query: {
+            category: getCategoryName(this.data.category),
+            categoryText: this.categoryText(this.data.category)
+          }
+        })
+      },
+      categoryText(category) {
+        return categoryText(category, this)
+      }
     }
   }
 </script>

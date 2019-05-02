@@ -293,10 +293,11 @@ export function filterSelectedBook(list) {
   })
 }
 
-// 点击阅读详情后会跳转到书本详情页(组件/视图)
+// 点击阅读详情后会跳转到书本详情页(组件/视图)---路由跳转
 export function showBookDetail(vue, book) {
   vue.$router.push({
     path: '/store/detail',
+    // 传递的参数
     query: {
       fileName: book.fileName,
       category: book.categoryText

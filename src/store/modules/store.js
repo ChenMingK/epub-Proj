@@ -2,12 +2,12 @@ const store = {
   state: {
     hotSearchOffsetY: 0,
     flapCardVisible: false,
-    isEditMode: false, // 是否进入编辑模式
-    shelfList: [],     // 书架图书列表
-    shelfSelected: [], // 书架图书选中的列表
-    shelfTitleVisible: true, // 书架标题的显示状态
-    shelfCategory: [],       // 点击目录时需要传入的书,书架分类列表数据
-    currentType: 1,  // 书架列表为1，书架分类列表为2
+    isEditMode: false,        // 是否进入编辑模式
+    shelfList: [],            // 书架图书列表
+    shelfSelected: [],        // 书架图书选中的列表
+    shelfTitleVisible: true,  // 书架标题的显示状态
+    shelfCategory: [],        // 点击目录时需要传入的书,书架分类列表数据
+    currentType: 1,           // 书架列表为1，书架分类列表为2
     ifStoreHomeScrollShow: true
   },
   mutations: {

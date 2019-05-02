@@ -12,16 +12,16 @@
           <span class="icon-check"></span>
         </div>
       </div>
-    </div> <!--替换Dialog组件中第一个slot-->
+    </div> <!--替换Dialog组件中第一个slot 新增状态:点击新建分组后的对话框-->
     <div class="dialog-new-group-wrapper" v-else>
       <div class="dialog-input-title-wrapper">
         <span class="dialog-input-title">{{$t('shelf.groupName')}}</span>
       </div>
       <div class="dialog-input-wrapper">
         <div class="dialog-input-inner-wrapper">
-          <input type="text" class="dialog-input" v-model="newGroupName" ref="dialogInput">
+          <input type="text" class="dialog-input" v-model="newGroupName" ref="dialogInput"><!--输入内容-->
           <div class="dialog-input-clear-wrapper" @click="clear" v-show="newGroupName && newGroupName.length > 0">
-            <span class="icon-close-circle-fill"></span>
+            <span class="icon-close-circle-fill"></span><!--取消文字-->
           </div>
         </div>
       </div>
@@ -99,6 +99,7 @@
           this.ifNewGroup = false
         }, 200)
       },
+      // 加入到分组, 只有进入分组之后才会有移出分组字样
       onGroupClick(item) {
         if (item.edit && item.edit === 1) { // 新建分组
           this.ifNewGroup = true
@@ -174,6 +175,7 @@
         } else { // 分组新增
           // 分组对象
           const group = {
+            // id:书架中倒数第二个元素+1
             id: this.shelfList[this.shelfList.length - 2].id + 1,
             itemList: [],
             selected: false,
@@ -182,7 +184,7 @@
           }
           let list = removeAddFromShelf(this.shelfList) // 移除 '+'
           list.push(group)
-          list = appendAddToShelf(list)
+          list = appendAddToShelf(list) // 追加'+'号
           this.setShelfList(list).then(() => {
             this.moveToGroup(group)
           })

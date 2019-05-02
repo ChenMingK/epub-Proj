@@ -63,11 +63,12 @@
       width: 33.33%;
       padding: px2rem(15);
       box-sizing: border-box;
+      // transition-group的过渡动画，添加方式与transition一样
       &.list-leave-active {
         display: none; // 注意这里的none
       }
       &.list-move {
-        transition: transform .5s;
+        transition: transform .5s; // 改时间可以看得更清楚
       }
     }
     .shelf-list-title {

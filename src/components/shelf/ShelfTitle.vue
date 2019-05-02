@@ -35,6 +35,7 @@
       title: String
     },
     computed: {
+      // 需要根据是否是编辑模式来控制需要显示的元素
       emptyCategory() {
         return !this.shelfCategory || !this.shelfCategory.itemList || this.shelfCategory.itemList.length === 0
       },
@@ -56,9 +57,12 @@
       changeGroupRight() {
         return this.emptyCategory
       },
+      // 显示选择了几本书
       selectedText() {
         const selectedNumber = this.shelfSelected ? this.shelfSelected.length : 0
-        return selectedNumber <= 0 ? this.$t('shelf.selectBook') : (selectedNumber === 1 ? this.$t('shelf.haveSelectedBook').replace('$1', selectedNumber) : this.$t('shelf.haveSelectedBooks').replace('$1', selectedNumber))
+        return selectedNumber <= 0 ? this.$t('shelf.selectBook') 
+          : (selectedNumber === 1 ? this.$t('shelf.haveSelectedBook').replace('$1', selectedNumber) 
+          : this.$t('shelf.haveSelectedBooks').replace('$1', selectedNumber))
       },
       popupCancelBtn() {
         return this.createPopupBtn(this.$t('shelf.cancel'), () => {
@@ -146,6 +150,7 @@
         this.setIsEditMode(false)
       },
       onEditClick() {
+        // 编辑模式取消后要清除之前的选中状态
         if (!this.isEditMode) {
           this.setShelfSelected([])
           this.shelfList.forEach(item => {

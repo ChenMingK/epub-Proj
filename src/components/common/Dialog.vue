@@ -8,7 +8,7 @@
         <slot>
         </slot>
         <div class="dialog-btn-wrapper">
-          <slot name="btn"> <!--带默认样式的插槽-->
+          <slot name="btn"> <!--带默认样式的插槽, 不填写按钮的话默认的按钮-->
             <div class="dialog-btn" @click="hide">{{$t('shelf.cancel')}}</div>
             <div class="dialog-btn">{{$t('shelf.confirm')}}</div>
           </slot>

@@ -1,8 +1,8 @@
 <template>
   <div class="shelf-item-book">
     <img class="shelf-item-book-cover" :src="data.cover">
-    <div class="private-wrapper" v-show="data.private"></div>
-    <div class="private-icon-wrapper" v-show="data.private">
+    <div class="private-wrapper" v-show="data.private"></div><!--小三角-->
+    <div class="private-icon-wrapper" v-show="data.private"><!--小图标-->
       <span class="icon-private"></span>
     </div>
   </div>
@@ -25,6 +25,7 @@
       width: 100%;
       height: 100%;
     }
+    // 用border写一个左下角的阴影小三角
     .private-wrapper {
       position: absolute;
       left: 0;
@@ -35,7 +36,6 @@
       border-style: solid;
       border-color: transparent transparent rgba(0, 0, 0, .3) rgba(0, 0, 0, .3);
     }
-    // 用border写一个左下角的阴影小三角
     .private-icon-wrapper {
       position: absolute;
       left: 0;

@@ -97,6 +97,7 @@ $animationType: linear;
   overflow-x: hidden;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch; // 解决移动端卡顿
+  // 没有滚动条
   &::-webkit-scrollbar {
     display: none;
   }

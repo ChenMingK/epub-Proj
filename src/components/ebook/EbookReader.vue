@@ -268,6 +268,7 @@ export default {
       const books = this.$route.params.fileName.split('|') // '|'隔开路由
       // console.log(books)
       const fileName = books[1]
+      // 优先判断本地缓存(indexedDB)中是否有blob格式的电子书(.epub), 直接传入blob对象epubjs也可以解析
       getLocalForage(fileName, (err, blob) => {
         if (!err && blob) {
           // console.log('找到离线缓存电子书')

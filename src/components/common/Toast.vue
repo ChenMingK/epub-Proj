@@ -10,7 +10,7 @@
   </transition>
 </template>
 <!--Toast组件要注意一个问题：在Toast未消失前跳转到其他页面会报错
-why?如何防止? @click.prevent能防止页面上的任何点击?-->
+why?如何防止? 加上一个背景蒙版, @click.prevent能防止页面上的任何点击?-->
 
 <script>
   export default {
@@ -44,7 +44,7 @@ why?如何防止? @click.prevent能防止页面上的任何点击?-->
       },
       // 持续显示对话框 用于显示下载进度
       continueShow() {
-        this.updateText(this.text)
+        this.updateText(this.text) // 持续显示的过程中可能需要更新文本
         clearTimeout(this.task) // what?
         this.task = null
         this.visible = true

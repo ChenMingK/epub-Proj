@@ -70,6 +70,7 @@
         list().then(response => {
           this.list = response.data.data
           this.total = response.data.total
+          // 从路由中获取参数, 比如传入分类, 就从所有的图书分类中找到该分类下的图书数据
           const category = this.$route.query.category
           const keyword = this.$route.query.keyword
           if (category) {

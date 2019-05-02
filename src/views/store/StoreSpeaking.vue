@@ -1,6 +1,6 @@
 <template>
   <div class="book-speaking">
-    <detail-title @back="back" ref="title"></detail-title>
+    <detail-title @back="back" ref="title"></detail-title><!--最上方-->
     <scroll class="content-wrapper"
             :top="42"
             :bottom="scrollBottom"
@@ -21,7 +21,7 @@
         <div class="icon-down-wrapper" @click="toggleContent">
           <span :class="{'icon-down2': !ifShowContent, 'icon-up': ifShowContent}"></span>
         </div>
-      </div>
+      </div><!--图标-->
       <div class="book-detail-content-wrapper" v-show="ifShowContent">
         <div class="book-detail-content-list-wrapper">
           <div class="loading-text-wrapper" v-if="!this.navigation">
@@ -32,28 +32,28 @@
                  @click="speak(item, index)">
               <speak-playing v-if="playingIndex === index"
                              :number="5"
-                             ref="speakPlaying"></speak-playing> <!--点击时的显示-->
+                             ref="speakPlaying"></speak-playing> <!--左侧线条图标, 点击时的显示-->
               <div class="book-detail-content-navigation-text" :class="{'is-playing': playingIndex === index}"
                    v-if="item.label">{{item.label}}
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div><!--电子书内容详情 目录信息-->
       <audio @canplay="onCanPlay"
              @timeupdate="onTimeUpdate"
              @ended="onAudioEnded"
-             ref="audio"></audio> <!--加control才会有实体 注意audio的几个重要事件 timeupdate会一直触发事件-->
-    </scroll>
+             ref="audio"></audio> <!--加controls="controls"才会有实体 注意audio的几个重要事件 timeupdate会一直触发事件-->
+    </scroll><!--电子书基本信息滚动展示-->
     <bottom :chapter="chapter"
             :currentSectionIndex="currentSectionIndex"
             :currentSectionTotal="currentSectionTotal"
             :showPlay="showPlay"
             :isPlaying.sync="isPlaying"
             :playInfo="playInfo"
-            @onPlayingCardClick="onPlayingCardClick"></bottom> <!--bottom组件初始化audio-->
+            @onPlayingCardClick="onPlayingCardClick"></bottom> <!--bottom组件初始化audio  .sync?-->
     <div class="book-wrapper">
-      <div id="read"></div> <!--电子书需要挂载在该div-->
+      <div id="read"></div> <!--电子书需要挂载在该div, 渲染电子书之后才能获取其信息, 这个div让其不可见-->
     </div>
     <speak-window :title="this.chapter ? this.chapter.label : ''"
                   :book="book"
@@ -63,7 +63,7 @@
                   :isPlaying.sync="isPlaying"
                   :playInfo="playInfo"
                   @updateText="updateText"
-                  ref="speakWindow"></speak-window>
+                  ref="speakWindow"></speak-window><!--播放面板-->
   </div>
 </template>
 
@@ -92,6 +92,7 @@
       SpeakWindow
     },
     computed: {
+      // 从audio控件本身的属性中获取相关信息, 用于计算总时间和剩余时间，已播放时间等
       currentMinute() {
         const m = Math.floor(this.currentPlayingTime / 60)
         return m < 10 ? '0' + m : m
@@ -116,6 +117,7 @@
         const s = Math.floor((this.totalPlayingTime - this.currentPlayingTime) - parseInt(this.leftMinute) * 60)
         return s < 10 ? '0' + s : s
       },
+      // 播放相关信息, 传递给SpeakBottom.vue组件
       playInfo() {
         if (this.audioCanPlay) {
           return {
@@ -199,11 +201,13 @@
       }
     },
     methods: {
+      // 请求服务端, 传入文本, 拿到合成的语音(mp3文件)
+      // 服务端将MP3文件保存在一个Path，前端拿到这个path进而请求这个MP3文件
       createVoice(text) {
         // 原生AJAX
         const xmlhttp = new XMLHttpRequest()
         // GET URL:指向服务端的API
-        // 这里没有使用同步,为了兼容audio...某些情况下必须使用同步
+        // 这里没有使用异步,为了兼容audio...某些情况下必须使用同步, audio在苹果手机/浏览器必须同步才能工作 lang语种
         xmlhttp.open('GET', `${process.env.VUE_APP_VOICE_URL}/voice?text=${text}&lang=${this.lang.toLowerCase()}`, false) // false:同步
         xmlhttp.send() // 发送请求
         const xmlDoc = xmlhttp.responseText // 获取响应数据
@@ -250,17 +254,19 @@
         })
         */
       },
+      // 点击播放按钮后触发
       togglePlay() {
         if (!this.isPlaying) { // 判断是否处于播放状态
           if (this.playStatus === 0) {
-            this.play()
+            this.play() // 初次播放
           } else if (this.playStatus === 2) {
-            this.continuePlay()
+            this.continuePlay() // 继续播放
           }
         } else {
           this.pausePlay()
         }
       },
+      // 点击任意目录条目时触发speak方法
       speak(item, index) {
         this.resetPlay()
         this.playingIndex = index // 目录索引
@@ -271,7 +277,7 @@
           this.section = this.book.spine.get(this.chapter.href)
           this.rendition.display(this.section.href).then(section => { // 渲染之后才能获取信息
             const currentPage = this.rendition.currentLocation()
-            // 拿到文本内容
+            // 拿到文本内容(本节)
             const cfibase = section.cfiBase
             const cfistart = currentPage.start.cfi.replace(/.*!/, '').replace(/\)/, '')
             const cfiend = currentPage.end.cfi.replace(/.*!/, '').replace(/\)/, '')
@@ -279,7 +285,7 @@
             this.currentSectionTotal = currentPage.start.displayed.total
             const cfi = `epubcfi(${cfibase}!,${cfistart},${cfiend})`
             // console.log(currentPage, cfi, cfibase, cfistart, cfiend)
-            // 获取到对应的文本以及做字符替换
+            // 获取到对应的文本以及做字符替换, 这里what?
             this.book.getRange(cfi).then(range => {
               let text = range.toLocaleString()
               text = text.replace(/\s(2,)/g, '')
@@ -287,7 +293,7 @@
               text = text.replace(/\n/g, '')
               text = text.replace(/\t/g, '')
               text = text.replace(/\f/g, '')
-              this.updateText(text) // 拿到文本传到paragraph
+              this.updateText(text) // 拿到文本传到paragraph, 科大讯飞API必须传文本过去
             })
           })
         }
@@ -303,6 +309,7 @@
         this.createVoice(this.paragraph) // 合成语音
       },
       continuePlay() {
+        // 调用audio控件的play方法
         this.$refs.audio.play().then(() => {
           this.$refs.speakPlaying[0].startAnimation()
           this.isPlaying = true
@@ -310,10 +317,10 @@
         })
       },
       pausePlay() {
-        this.$refs.audio.pause() // 使用audio的pause方法
+        this.$refs.audio.pause()                   // 使用audio的pause方法进行暂停
         this.$refs.speakPlaying[0].stopAnimation() // 停止动画
-        this.isPlaying = false // 播放状态
-        this.playStatus = 2 // 三种状态
+        this.isPlaying = false                     // 播放状态
+        this.playStatus = 2                        // 三种状态
       },
       onAudioEnded() {
         this.resetPlay()
@@ -321,6 +328,7 @@
         const percent = Math.floor((this.currentPlayingTime / this.totalPlayingTime) * 100)
         this.$refs.speakWindow.refreshProgress(percent)
       },
+      // 播放时会不停地调用该事件, 这里主要是将当前播放时间传给播放面板组件
       onTimeUpdate() {
         this.currentPlayingTime = this.$refs.audio.currentTime
         const percent = Math.floor((this.currentPlayingTime / this.totalPlayingTime) * 100)

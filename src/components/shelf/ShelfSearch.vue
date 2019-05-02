@@ -28,7 +28,7 @@
         <span class="cancel-text">{{$t('shelf.cancel')}}</span>
       </div>
     </div>
-    <transition name="hot-search-move"> <!--过渡动画无法正常显示why？这里必须在class多加一个transition才行-->
+    <transition name="hot-search-move"> 
       <div class="shelf-search-tab-wrapper" v-if="ifInputClicked">
         <div class="shelf-search-tab-item" 
             v-for="item in tabs" :key="item.id"
@@ -36,7 +36,7 @@
           <span class="shelf-search-tab-text" :class="{'is-selected': item.id === selectedTab}">{{item.text}}</span>     
         </div>
       </div>
-    </transition>
+    </transition><!--下方的三个tab, 功能尚未实现-->
   </div>
 </template>
 
@@ -95,6 +95,7 @@
         this.ifInputClicked = false
         this.setShelfTitleVisible(true)
       },
+      // 语言切换
       switchLocale() {
         if (this.lang === 'en') {
           this.$i18n.locale = 'cn'

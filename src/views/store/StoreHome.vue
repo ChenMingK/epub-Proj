@@ -40,6 +40,7 @@
       CategoryBook,
       Category
     },
+    // 在该组件请求数据，传递给子组件
     data() {
       return {
         scrollTop: 94,

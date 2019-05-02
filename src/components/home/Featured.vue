@@ -1,6 +1,6 @@
 <template>
   <div class="featured">
-    <title-view :label="titleText" :btn="btnText" v-if="titleVisible && data && data.length > 0"></title-view>
+    <title-view :label="titleText" :btn="btnText" v-if="titleVisible && data && data.length > 0" @onClick="showBookCategory"></title-view>
     <div class="featured-list">
       <div class="featured-item-wrapper">
         <div class="featured-item" v-for="(item, index) in data" :key="index" @click="showBookDetail(item)">
@@ -21,7 +21,7 @@
 <script type="text/ecmascript-6">
   import TitleView from './Title'
   import { realPx } from '@/utils/utils'
-  import { categoryText } from '../../utils/store'
+  import { categoryText, getCategoryName } from '../../utils/store'
   import { storeHomeMixin } from '../../utils/mixin'
 
   export default {
@@ -48,6 +48,15 @@
       }
     },
     methods: {
+      showBookCategory() {
+        this.$router.push({
+          path: '/store/list',
+          query: {
+            category: getCategoryName(this.data.category),
+            categoryText: this.categoryText(this.data.category)
+          }
+        })
+      },
       categoryText(category) {
         return categoryText(category, this)
       },

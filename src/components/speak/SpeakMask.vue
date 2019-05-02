@@ -81,6 +81,7 @@
   import { realPx } from '@/utils/utils'
 
   export default {
+    // 电子书信息和播放进度相关的信息, 由StoreSpeaking.vue传入
     props: {
       title: String,
       book: Object,

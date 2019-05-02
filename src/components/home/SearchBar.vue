@@ -75,7 +75,7 @@
         this.$router.push({
           path: '/store/list',
           query: {
-            keyword: this.searchText
+            keyword: this.searchText // 传入搜索栏中的文本
           }
         })
       },

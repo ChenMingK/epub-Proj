@@ -26,6 +26,7 @@
     components: {
       TitleView
     },
+    // 接受父组件的数据
     props: {
       data: Array
     },
@@ -57,6 +58,7 @@
       }
     },
     methods: {
+      // 由子Title子组件$emit触发
       change() {
         if (this.index + 1 >= this.total) {
           this.index = 0

@@ -31,6 +31,7 @@
       }
     },
     computed: {
+      // 将动态选择组件的逻辑封装在computed
       item() {
         return this.data.type === 1 ? this.book : (this.data.type === 2) 
           ? this.category : this.add
@@ -41,11 +42,9 @@
         if (this.isEditMode) {
           this.data.selected = !this.data.selected
           if (this.data.selected) {
-            // 这里使用扩展的数组方法 boost.js 只把选中的图书放入 what?
-            this.shelfSelected.pushWithoutDuplicate(this.data) // vuex 存储已选中的图书
-          } 
-          // 从选中的图书中删除 注意data是每个图书的一个Object对象(父组件传入)
-          else {
+            // 这里使用扩展的数组方法 boost.js 只把选中的图书放入
+            this.shelfSelected.pushWithoutDuplicate(this.data) // vuex 存储已选中的图书, 为了便于多组件操作
+          } else { // 从选中的图书中删除 注意data是每个图书的一个Object对象(父组件传入)
             this.setShelfSelected(this.shelfSelected.filter(item => item.id !== this.data.id))
           }
         } else {
