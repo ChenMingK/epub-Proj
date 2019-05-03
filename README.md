@@ -17,7 +17,7 @@
 &emsp;|-- favicon.ico &emsp;// favicon图标<br>
 &emsp;|-- index.html &emsp;// 项目入口文件(打包前的index)<br>
 |-- src<br>
-|&emsp;|-- api &emsp&emsp;// 所有API请求(axios)<br>
+|&emsp;|-- api &emsp;&emsp;// 所有API请求(axios)<br>
 |&emsp;|-- assets &emsp;&emsp;// 主题、字体、样式等静态资源<br>
 |&emsp;|-- components &emsp;// 各种组件(建一个common目录存放全局公用组件)<br>
 |&emsp;|-- lang &emsp;&emsp;// vue-i18n配置(语言国际化)<br>
