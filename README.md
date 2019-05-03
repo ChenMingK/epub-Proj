@@ -13,7 +13,27 @@
 
 
 # 大致代码结构
-<img src="https://github.com/ChenMingK/ImagesStore/blob/master/imgs/epubProj15.png">
+|-- public<br>
+&emsp;|-- favicon.ico &emsp;// favicon图标<br>
+&emsp;|-- index.html &emsp;// 项目入口文件(打包前的index)<br>
+|-- src<br>
+|&emsp;|-- api &emsp&emsp;// 所有API请求(axios)<br>
+|&emsp;|-- assets &emsp;&emsp;// 主题、字体、样式等静态资源<br>
+|&emsp;|-- components &emsp;// 各种组件(建一个common目录存放全局公用组件)<br>
+|&emsp;|-- lang &emsp;&emsp;// vue-i18n配置(语言国际化)<br>
+|&emsp;|-- mock &emsp;&emsp;// 没有后端的话mock模拟数据<br>
+|&emsp;|-- store &emsp;&emsp;// vuex<br>
+|&emsp;|-- utils &emsp;&emsp;// 全局公用方法<br>
+|&emsp;|-- views &emsp;&emsp;// 视图组件(可视的页面)<br>
+|&emsp;|-- App.vue &emsp;// 入口页面<br>
+|&emsp;|-- main.js &emsp;// 入口 加载组件 初始化等<br>
+|&emsp;|-- router.js &emsp;// vue-router定义路由<br>
+|-- .env.development &emsp;// 开发环境配置(线下)<br>
+|-- .env.production &emsp;// 生产环境配置(线上)<br>
+|-- babel.config.js &emsp;// babel配置<br>
+|-- .eslintrc.js  &emsp;// eslint配置项<br>
+|-- .gitignore  &emsp;// git忽略项<br>
+|-- vue.config.js &emsp;// 配置webpack等<br>
 
 # Show
 <img src="https://github.com/ChenMingK/ImagesStore/blob/master/imgs/epubProjGif.gif" width=375px>
