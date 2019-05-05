@@ -147,6 +147,140 @@ export function clearLocalStorage() {   // 清除缓存
 }
 ```
 
+## 8.mock.js模拟后台数据
+开发环境下通过mock.js模拟接口数据,源码: https://github.com/nuysoft/Mock<br>
+实现原理：替换原生的XMLHttpRequest<br>
+好处：不需要改变现有的网络请求代码，线下本地调试与线上url一样<br>
+提供丰富的数据类型，但是不支持blob类型，无法模拟下载<br>
+
+使用步骤:<br>
+1.cnpm i mockjs -D (save-dev)<br>
+2.cnpm i axios –save (http请求)<br>
+3.src目录下创建mock文件夹<br>
+4.以json对象的形式模拟接口数据（自己编写），同时在该目录下编写index.js对mock进行初始化，如下
+
+``` javaScript
+// export default Mock
+import Mock from 'mockjs'
+// 各个模块的数据
+import home from './bookHome'         
+import shelf from './bookShelf'
+import list from './bookList'
+import flatList from './bookFlatList'
+
+// mock方法，三个参数
+Mock.mock(/\/book\/home/, 'get', home) // 前端访问book/home时会请求这里的数据
+Mock.mock(/\/book\/shelf/, 'get', shelf)
+Mock.mock(/\/book\/list/, 'get', list)
+Mock.mock(/\/book\/flat-list/, 'get', flatList)
+```
+mock方法, 传递参数： 
+- 第一个参数：正则表达式：匹配请求的url
+- 第二个参数：请求的方式
+- 第三个参数：返回的数据
+
+前端在/book/home路径下的网络请求都会得到这里mock的数据<br>
+
+5.main.js导入
+### 第二种mock方式，利用本地服务
+在vue.config.js中添加如下代码，重新启动服务，输入：IP:8080/book/home就可以请求到数据
+
+``` javaScript
+// 添加自定义的接口  参数：全局对象，模拟的url，要传递的数据
+function mock(app, url, data) {
+  app.get(url, (request, response) => {
+    response.json(data) // 将data变为json对象传入
+  })
+}
+
+// 模拟接口,require导入手动编写的数据
+const homeData = require('./src/mock/bookHome')
+const shelfData = require('./src/mock/bookShelf')
+const listData = require('./src/mock/bookList')
+const flatListData = require('./src/mock/bookFlatList')
+module.exports = {
+    publicPath: process.env.NODE_ENV === 'production'
+        ? './'
+        : '/',
+    devServer: {
+      // 在应用启动之前模拟接口
+      before(app) {
+        mock(app, '/book/home', homeData)       // 访问/book/home这个路径能获取数据？
+        mock(app, '/book/shelf', shelfData)
+        mock(app, '/book/list', listData)
+        mock(app, '/book/flat-list', flatListData)
+      }
+    }
+}
+```
+
+## 9.使用vue-create-api快速创建全局公共组件
+1.cnpm i -S vue-create-api<br>
+2.utils文件夹下新建create-api.js
+
+``` javaScript
+// use vue-create-api
+// 通过API的形式调用组件
+// 会在body()最外层添加组件，一般弹窗之类的才会使用(全屏)
+// 使用vue-create-api的组件必须增加一个name属性
+import CreateAPI from 'vue-create-api'
+import Vue from 'vue'
+import Toast from '../components/common/Toast' // 需要使用的公共组件
+import Popup from '../components/common/Popup'
+import GroupDialog from '../components/shelf/ShelfGroupDialog.vue'
+
+Vue.use(CreateAPI)
+Vue.createAPI(Toast, true)
+Vue.createAPI(Popup, true)
+Vue.createAPI(GroupDialog, true)
+```
+3.组件中使用（JS创建组件）
+
+``` javaScript
+// Vue.createAPI(Toast, true) => this.$createToast
+this.$createToast({
+  $props: {
+
+  }
+}).show() // 前面完成DOM的创建, show()方法完成组件的展示
+```
+注意vue-create-api使用的组件必须添加一个name属性如`name: 'toast',`<br>
+4.进一步简化
+
+``` javaScript
+// 全局mixin 组件中
+// mixin后使用this.toast()即可调用
+Vue.mixin({
+  methods: {
+    toast(settings) {
+      return this.$createToast({
+        // 组件要传入的数据
+        $props: settings
+      })
+    },
+    popup(settings) {
+      return this.$createPopup({
+        $props: settings
+      })
+    },
+    // 更简洁的toast
+    simpleToast(text) {
+      const toast = this.toast({
+        text: text
+      })
+      toast.show()
+      toast.updateText(text)
+    },
+    dialog(settings) {
+      return this.$createGroupDialog({
+        $props: settings
+      })
+    }
+  }
+})
+```
+<img src="https://github.com/ChenMingK/ImagesStore/blob/master/imgs/epubProj31.png"><br>
+:warning:可以看到这类组件应该为全屏的，因为vue-create-api是在与App组件同级创建新的组件的
 ## 其他
 - 在顶层指定font-size为0可以消除div之间的空格
 - 滚动条和文字的缩略显示必须指定最外层的宽度
