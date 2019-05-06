@@ -1,6 +1,7 @@
 # epub-proj开发记录
 跟网上的老师学做的项目，同时自己做了相应的修改和优化。以下文档记录开发过程中遇到的一些问题及主要技术难点, 顺便记录些有用的Tips和API等等.<br>
 技术栈: vue + vuex + vue-router + node.js + Nginx<br>
+**项目已发布到服务器(仍然有一些Bug)，可以点击<a href="http://39.108.122.248/works"></a>体验**听书功能因为域名还没备案无法使用
 - <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.md" target="_blank">搭建开发环境</a><br>
 - <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E9%98%85%E8%AF%BB%E5%99%A8%E9%83%A8%E5%88%86%E5%BC%80%E5%8F%91.md" target="_blank">阅读器部分开发</a><br>
 - <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/epubjs%E7%9B%B8%E5%85%B3API.md" target="_blank">ePubjs相关API</a><br>
