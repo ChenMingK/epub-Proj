@@ -11,6 +11,7 @@
 - <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/node%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA.md" target="_blank">node服务搭建</a><br>
 - <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96.md" target="_blank">项目优化</a><br>
 - <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/Tips.md" target="_blank">Tips</a><br>
+- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E5%85%AC%E5%85%B1%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91.md">公共组件开发</a>
 
 
 # 大致代码结构
