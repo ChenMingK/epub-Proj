@@ -236,6 +236,8 @@ Vue.createAPI(GroupDialog, true)
 ```
 3.组件中使用（JS创建组件）
 
+main.js导入`import './utils/create-api'`
+
 ``` javaScript
 // Vue.createAPI(Toast, true) => this.$createToast
 this.$createToast({
