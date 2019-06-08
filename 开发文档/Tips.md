@@ -215,6 +215,8 @@ module.exports = {
 ```
 
 ## 9.使用vue-create-api快速创建全局公共组件
+**Github:** https://github.com/cube-ui/vue-create-api/blob/master/README_zh-CN.md
+
 1.cnpm i -S vue-create-api<br>
 2.utils文件夹下新建create-api.js
 
