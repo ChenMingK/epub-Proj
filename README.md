@@ -1,20 +1,10 @@
-# epub-proj开发记录
-参考网上的课程做的项目，同时自己做了相应的修改和优化。以下文档记录开发过程中遇到的一些问题及主要技术难点, 顺便记录些有用的 Tips 和 API 等等.<br>
-技术栈: vue + vuex + vue-router + node.js + Nginx<br>
-**项目已发布到服务器(仍然有一些Bug)** 你可以<a href="http://39.108.122.248/works/">点击这里体验</a>，~~听书功能因为域名还没备案无法使用~~
-- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.md" target="_blank">搭建开发环境</a><br>
-- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E9%98%85%E8%AF%BB%E5%99%A8%E9%83%A8%E5%88%86%E5%BC%80%E5%8F%91.md" target="_blank">阅读器部分开发</a><br>
-- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/epubjs%E7%9B%B8%E5%85%B3API.md" target="_blank">ePubjs相关API</a><br>
-- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E4%B9%A6%E5%9F%8E%E5%BC%80%E5%8F%91.md" target="_blank">书城部分开发</a><br>
-- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E4%B9%A6%E6%9E%B6%E5%BC%80%E5%8F%91.md" target="_blank">书架部分开发</a><br>
-- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E5%90%AC%E4%B9%A6%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91.md" target="_blank">听书模块开发</a><br>
-- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/node%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA.md" target="_blank">node服务搭建</a><br>
-- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96.md" target="_blank">项目优化</a><br>
-- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/Tips.md" target="_blank">Tips</a><br>
-- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E5%85%AC%E5%85%B1%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91.md">公共组件开发</a>
+## 体验地址
+项目已发布到服务器，你可以<a href="http://39.108.122.248/works/"> 点击这里体验</a>，~~听书功能因为域名还没备案无法使用~~
 
+## Show
+<img src="https://github.com/ChenMingK/ImagesStore/blob/master/imgs/epubProjGif.gif" width=375px>
 
-# 大致代码结构
+## 项目结构
 ```
 |-- public
   |-- favicon.ico         // favicon 图标
@@ -38,5 +28,21 @@
 |-- .gitignore            // git 忽略项
 |-- vue.config.js         // 配置 webpack
 ```
-# Show
-<img src="https://github.com/ChenMingK/ImagesStore/blob/master/imgs/epubProjGif.gif" width=375px>
+
+## epub-proj 开发记录
+参考网上的课程做的项目，同时自己做了相应的修改和优化。以下文档记录开发过程中遇到的一些问题及主要技术难点, 顺便记录些有用的 Tips 和 API 等等.<br>
+技术栈: vue + vuex + vue-router + node.js + Nginx<br>
+
+- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.md" target="_blank">搭建开发环境</a><br>
+- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E9%98%85%E8%AF%BB%E5%99%A8%E9%83%A8%E5%88%86%E5%BC%80%E5%8F%91.md" target="_blank">阅读器部分开发</a><br>
+- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/epubjs%E7%9B%B8%E5%85%B3API.md" target="_blank">ePubjs相关API</a><br>
+- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E4%B9%A6%E5%9F%8E%E5%BC%80%E5%8F%91.md" target="_blank">书城部分开发</a><br>
+- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E4%B9%A6%E6%9E%B6%E5%BC%80%E5%8F%91.md" target="_blank">书架部分开发</a><br>
+- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E5%90%AC%E4%B9%A6%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91.md" target="_blank">听书模块开发</a><br>
+- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/node%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA.md" target="_blank">node服务搭建</a><br>
+- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E9%A1%B9%E7%9B%AE%E4%BC%98%E5%8C%96.md" target="_blank">项目优化</a><br>
+- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/Tips.md" target="_blank">Tips</a><br>
+- <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E5%85%AC%E5%85%B1%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91.md">公共组件开发</a>
+
+
+
