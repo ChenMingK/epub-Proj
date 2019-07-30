@@ -16,6 +16,12 @@
 ## 体验地址
 项目已发布到服务器，你可以<a href="http://39.108.122.248/works/"> 点击这里体验</a>，~~听书功能因为域名还没备案无法使用~~
 
+## 其他说明
+
+如果你需要下载代码并做本地调试，把 `.env.development` 中的环境变量全部替换为 `.env.production` 即可
+
+另外，由于静态资源服务器上挂了将近 10 GB 的资源，所以不好上传了，你可以下载前端代码以及查看开发文档来 GET 你需要的技能点
+
 ## Show
 <img src="https://github.com/ChenMingK/ImagesStore/blob/master/imgs/epubProjGif.gif" width=375px>
 
