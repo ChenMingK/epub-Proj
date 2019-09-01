@@ -1,6 +1,8 @@
 ## epub-proj 开发记录
-参考网上的课程做的项目，同时自己做了相应的修改和优化。以下文档记录开发过程中遇到的一些问题及主要技术难点, 顺便记录些有用的 Tips 和 API 等等.<br>
-技术栈: vue + vuex + vue-router + node.js + Nginx<br>
+参考网上的课程做的项目 [Sam 老师强推](https://coding.imooc.com/learn/list/285.html)，同时自己做了相应的修改和优化。以下文档记录开发过程中遇到的一些问题及主要技术难点, 顺便记录些有用的 Tips 和 API 等等.（看完这个课程我花了 100 多个小时，文档和 demo 都是后面整理的）
+
+技术栈: vue + vuex + vue-router + node.js + Nginx
+
 
 - <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.md" target="_blank">搭建开发环境</a><br>
 - <a href="https://github.com/ChenMingK/epub-Proj/blob/master/%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3/%E9%98%85%E8%AF%BB%E5%99%A8%E9%83%A8%E5%88%86%E5%BC%80%E5%8F%91.md" target="_blank">阅读器部分开发</a><br>
