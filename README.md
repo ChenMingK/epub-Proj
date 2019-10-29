@@ -1,5 +1,5 @@
 ## epub-proj 开发记录
-参考网上的课程做的项目 [Sam 老师强推](https://coding.imooc.com/learn/list/285.html)，同时自己做了相应的修改和优化。以下文档记录开发过程中遇到的一些问题及主要技术难点, 顺便记录些有用的 Tips 和 API 等等.（看完这个课程我花了 100 多个小时，文档和 demo 都是后面整理的）
+参考网上的课程做的项目 [Sam 老师强推](https://coding.imooc.com/learn/list/285.html)，同时自己做了相应的修改和优化。以下文档记录开发过程中遇到的一些问题及主要技术难点, 顺便记录些有用的 Tips 和 API 等等.
 
 技术栈: vue + vuex + vue-router + node.js + Nginx
 
